@@ -28,23 +28,13 @@ export default class View {
     // Element lists
     this.$$.squares = this.#qsAll('[data-id="square"]');
 
-    /**
-     * UI-only event listeners
-     *
-     * These are listeners that do not mutate state and therefore
-     * can be contained within View entirely.
-     */
+   
     this.$.menuBtn.addEventListener("click", (event) => {
       this.#toggleMenu();
     });
   }
 
-  /**
-   * This application follows a declarative rendering methodology
-   * and will re-render every time the state changes
-   *
-   * @see https://www.zachgollwitzer.com/posts/imperative-programming#react-declarative-vs-jquery-imperative
-   */
+  
   render(game, stats) {
     const { playerWithStats, ties } = stats;
     const {
@@ -70,10 +60,7 @@ export default class View {
     this.#setTurnIndicator(currentPlayer);
   }
 
-  /**
-   * Events that are handled by the "Controller" in app.js
-   * ----------------------------------------------------------
-   */
+  
 
   bindGameResetEvent(handler) {
     this.$.resetBtn.addEventListener("click", handler);
@@ -88,10 +75,7 @@ export default class View {
     this.#delegate(this.$.grid, '[data-id="square"]', "click", handler);
   }
 
-  /**
-   * All methods below ⬇️ are private utility methods used for updating the UI
-   * -----------------------------------------------------------------------------
-   */
+ 
 
   #updateScoreboard(p1Wins, p2Wins, ties) {
     this.$.p1Wins.innerText = `${p1Wins} wins`;
@@ -167,10 +151,7 @@ export default class View {
     this.$.turn.replaceChildren(icon, label);
   }
 
-  /**
-   * The #qs and #qsAll methods are "safe selectors", meaning they
-   * _guarantee_ the elements we select exist in the DOM (otherwise throw an error)
-   */
+ 
   #qs(selector, parent) {
     const el = parent
       ? parent.querySelector(selector)
@@ -189,15 +170,7 @@ export default class View {
     return elList;
   }
 
-  /**
-   * Rather than registering event listeners on every child element in our Tic Tac Toe grid, we can
-   * listen to the grid container and derive which square was clicked using the matches() function.
-   *
-   * @param {*} el the "container" element you want to listen for events on
-   * @param {*} selector the "child" elements within the "container" you want to handle events for
-   * @param {*} eventKey the event type you are listening for (e.g. "click" event)
-   * @param {*} handler the callback function that is executed when the specified event is triggered on the specified children
-   */
+ 
   #delegate(el, selector, eventKey, handler) {
     el.addEventListener(eventKey, (event) => {
       if (event.target.matches(selector)) {
